@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit, ElementRef, AfterViewChecked, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewChild, OnInit, ElementRef, AfterViewChecked, OnDestroy, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
@@ -10,8 +10,7 @@ declare const TimeSeries: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
 
