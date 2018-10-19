@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CryptoBoardComponent } from '@pages/crypto-board/crypto-board.component';
 
 @Component({
   selector: 'app-main-nav',
