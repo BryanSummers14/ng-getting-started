@@ -42,6 +42,7 @@ For Performance: [Immutability](https://facebook.github.io/immutable-js/), [Memo
 
 You may not want Angular material, but I highly recommend the [Component Development Kit](https://material.angular.io/cdk/categories) which can be pulled in separately
 
+I used a crypto coin dashboard, but feel free to use whatever api you want [public apis](https://github.com/toddmotto/public-apis)
 
 ## Project Steps
 
