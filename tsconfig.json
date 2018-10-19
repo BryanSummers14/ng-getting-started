@@ -13,6 +13,13 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "paths": {
+      "@pages/*": ["src/app/pages/*"],
+      "@services/*": ["src/app/services/*"],
+      "@components/*": ["src/app/components/*"],
+      "@directives/*": ["src/app/directives/*"],
+      "@pipes/*": ["src/app/pipes/*"]
+    },
     "lib": [
       "es2018",
       "dom"

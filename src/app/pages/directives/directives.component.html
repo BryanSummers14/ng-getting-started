@@ -1,0 +1,9 @@
+<app-main-nav [navTitle]="title">
+  <main>
+    <div [appGrow]="growVal" class="grow-div"></div>
+    <mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1" value="2" (change)="growVal = $event.value"></mat-slider>
+    <div *appRoleToggle="'admin'">Will show if user has role admin</div>
+    <div *appRoleToggle="'level1'">Will show if use has role level1</div>
+    <div *appRoleToggle="'level2'">Will show if use has role level2</div>
+  </main>
+</app-main-nav>

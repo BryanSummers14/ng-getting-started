@@ -1,0 +1,15 @@
+main {
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  .grow-div {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+  }
+  mat-slider {
+    width: 300px;
+  }
+}

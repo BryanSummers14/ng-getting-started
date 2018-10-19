@@ -1,0 +1,12 @@
+<main class="login">
+    <mat-card class="login-card">
+      <mat-error *ngIf="hasError">There was an error</mat-error>
+        <mat-form-field>
+        <input matInput #username type="text" placeholder="Username">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" #password matInput placeholder="Password">
+      </mat-form-field>
+      <a mat-raised-button (click)="handleLogin(username.value, password.value)" color="primary">Login</a>
+    </mat-card>
+</main>
