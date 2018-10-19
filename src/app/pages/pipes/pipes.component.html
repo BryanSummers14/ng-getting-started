@@ -2,11 +2,8 @@
 <app-main-nav [navTitle]="title">
   <main>
     <mat-form-field>
-      <input matInput type="text" #newUser placeholder="New User" value=""/>
+      <input matInput type="number" [(ngModel)]="multiplier"/>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="addNewUser(newUser)">Add User</button>
-    <mat-card *ngFor="let user of users">
-      {{ user.firstName }} {{ user.lastName }} Salary: {{ user.salaryBase | mul:12 }}
-    </mat-card>
+    <app-users-list [usersList]="users$" [num]="multiplier"></app-users-list>
   </main>
 </app-main-nav>

@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'mul',
-  pure: true
+  name: 'mul'
 })
 export class MultiplyPipe implements PipeTransform {
 

@@ -1,0 +1,4 @@
+
+  <mat-card *ngFor="let user of (usersList | async)">
+    {{ user.firstName }} {{ user.lastName }} Salary: {{ user.salaryBase | mul:num }}
+  </mat-card>
