@@ -22,6 +22,21 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Running Docker
+
+I added a docker compose file to make it easier to build off of and add additional services if you want
+
+To get started run
+```
+ng build
+
+docker-compose build
+```
+Then you can run
+```
+docker-compose up
+```
+
 ## Resources
 
 For RxJS: [reactive-how](http://reactive.how/), [learn-rxjs](https://www.learnrxjs.io/)
