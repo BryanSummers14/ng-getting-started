@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CryptoService } from '@services/crypto.service';
+import { CryptoService } from '@services/crypto/crypto.service';
 
 @Component({
   templateUrl: './crypto-board.component.html',

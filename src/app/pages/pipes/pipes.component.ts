@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { Observable } from 'rxjs';
-import { UsersService } from '@services/users.service';
+import { UsersService } from '@services/users/users.service';
 
 @Component({
   templateUrl: './pipes.component.html',
