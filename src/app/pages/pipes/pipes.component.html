@@ -6,7 +6,7 @@
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="addNewUser(newUser)">Add User</button>
     <mat-card *ngFor="let user of users">
-      {{ user.firstName }} {{ user.lastName }} Salary: {{ user.salaryBase | fib }}
+      {{ user.firstName }} {{ user.lastName }} Salary: {{ user.salaryBase | mul:12 }}
     </mat-card>
   </main>
 </app-main-nav>

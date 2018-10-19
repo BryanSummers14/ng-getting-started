@@ -1,4 +1,4 @@
-const baseUrl = 'https://training-login-ikcseqfxtu.now.sh';
+const baseUrl = 'https://training-login-hcexbwcqjc.now.sh';
 
 export const environment = {
   production: true,

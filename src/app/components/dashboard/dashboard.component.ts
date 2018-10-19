@@ -1,5 +1,6 @@
-import { Component, Input, ViewChild, OnInit, ElementRef, AfterViewChecked } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { Component, Input, ViewChild, OnInit, ElementRef, AfterViewChecked, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { map, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { Breakpoints, BreakpointState, BreakpointObserver } from '@angular/cdk/layout';
 
 declare const io: any;
@@ -9,16 +10,19 @@ declare const TimeSeries: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent implements OnInit, AfterViewChecked {
+export class DashboardComponent implements OnInit, AfterViewChecked, OnDestroy {
+
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   @Input() coinInfo$: any;
   @ViewChild('coinCanvas') coinCanvas: ElementRef;
   found = false;
 
   mobileCards = [
-    { title: 'Card 1',
+    { title: 'Realtime Data',
       cols: 1,
       rows: 1,
       content: ''
@@ -67,9 +71,12 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
-    this.coinInfo$.subscribe(_data => {
+    this.coinInfo$.pipe(takeUntil(this.ngUnsubscribe)).subscribe(_data => {
       this.desktopCards[1].content = _data[0]['BTC']['USD'];
       this.desktopCards[2].content = _data[1]['ETH']['USD'];
+
+      this.mobileCards[1].content = _data[0]['BTC']['USD'];
+      this.mobileCards[2].content = _data[1]['ETH']['USD'];
     });
   }
 
@@ -77,7 +84,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
     if (this.coinCanvas && !this.found) {
       this.found = true;
       const coinSmoothie = new SmoothieChart();
-      coinSmoothie.streamTo(document.getElementById('coincanvas'), 1000);
+      coinSmoothie.streamTo(document.getElementById('coincanvas'));
       const bit = new TimeSeries();
 
       coinSmoothie.addTimeSeries(bit,
@@ -94,5 +101,10 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
             }
         });
     }
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next(null);
+    this.ngUnsubscribe.complete();
   }
 }

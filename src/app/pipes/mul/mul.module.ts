@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FibPipe } from './fib.pipe';
+import { MultiplyPipe } from './mul.pipe';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [FibPipe],
-  exports: [FibPipe]
+  declarations: [MultiplyPipe],
+  exports: [MultiplyPipe]
 })
-export class FibModule { }
+export class MultiplyPipeModule { }

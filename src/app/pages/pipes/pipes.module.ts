@@ -4,7 +4,7 @@ import { RouterModule, Routes} from '@angular/router';
 import { PipesComponent } from './pipes.component';
 import { MatCardModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { MainNavModule } from '@components/main-nav/main-nav.module';
-import { FibModule } from '@pipes/fib/fib.module';
+import { MultiplyPipeModule } from '@pipes/mul/mul.module';
 
 const routes: Routes = [
   { path: '', component: PipesComponent }
@@ -17,7 +17,7 @@ const routes: Routes = [
     MatInputModule,
     MainNavModule,
     MatButtonModule,
-    FibModule,
+    MultiplyPipeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PipesComponent],

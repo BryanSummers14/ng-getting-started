@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { UsersService } from '@services/users.service';
 
 @Component({
@@ -10,6 +10,14 @@ export class PipesComponent implements OnInit {
   title = 'Pipes';
   users = [];
 
+  @ViewChild('newUser') userInput: ElementRef;
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.addNewUser(this.userInput.nativeElement);
+    }
+  }
+
   constructor(private usersService: UsersService) { }
 
   ngOnInit() {
@@ -19,13 +27,16 @@ export class PipesComponent implements OnInit {
   }
 
   addNewUser(input: HTMLInputElement) {
-    const username = input.value;
+    if (input.value.length === 0) {
+      return;
+    }
+    const username = input.value.split(' ');
     const user = {
-      firstName: username,
-      lastName: 'last name',
-      salaryBase: Math.floor(Math.random() * 5)
+      firstName: username[0],
+      lastName: username[1] || username[0],
+      salaryBase: Math.floor(Math.random() * 50)
     };
-    this.users.push(user);
+    this.users.unshift(user);
     input.value = '';
   }
 

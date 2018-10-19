@@ -22,6 +22,14 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+## Project Steps
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
+
+Architecture Overview ![alt text](angular-scalable-architecture.png)
+
+1. Setup Project (ng new [project-name]). Specific options don't matter
+2. Generate first component (ng generate [g] component pages/login)
+3. Parts of a component, selector, template, styles, view encapsulation, change detection, logic
+4. Get component to render in our template
+5. Project setup (tsconfig/linter)
