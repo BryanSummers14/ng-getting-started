@@ -68,18 +68,19 @@ pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
     - check that node is installed by entering node -v into your terminal if all goes well it should say v8.12.0 (or whatever the current version is)
 
 2. Angular Cli Installation
-    - Now that node is installed you can type the following command to install the Angular cli via npm (node package manager) globally. ``npm install -g @angular/cli`` 
-    - Check that the cli installed by typing ``ng --version`` If all went well you should see Angular Cli along with the version information.
+    - Now that node is installed you can type the following command to install the Angular cli via npm (node package manager) globally. ``npm install -g @angular/cli`` (if you run into permission issues, you can alternatively try to install with [yarn](https://yarnpkg.com/en/))
+    - Check that the cli installed by typing ``ng version`` If all went well you should see Angular Cli along with the version information.
+    - Alternatively you can prefix ``npx`` (which ships with npm) to all ng commands rather than install the CLI
     
 *side note: angular uses typescript for its language, you can find out more here about what typescript is and how to use it. [TypeScript](https://www.typescriptlang.org/docs/home.html)
  
 Architecture Overview ![alt text](angular-scalable-architecture.png)
 
-1. Setup Project by using the angular cli (``ng new [project-name]``). Specific options don't matter
+1. Setup Project by using the angular cli (``ng new [project-name]``). Add angular routing, choose whatever styling you prefer.
 2. Generate first component using the angular cli (``ng generate component pages/login`` or shorthand `` ng g c pages/login``)
 3. There are several different parts to a component such as, selector, template, styles, Lifecycle hook, logic. Each of these will be covered in more detail.
     - Selector, template, styles.
-      - In the top of your new component you will see a decorator (@Component) This is a decorator for angular when it is compiling your Typescript
+      - In the top of your new component you will see a decorator (@Component) This is a decorator for angular when it is compiling your Typescript. The decorator tells angular what to do with your class. For more info on the types of decorators available within angular, take a look [here](https://toddmotto.com/angular-decorators)
       - The full decorator looks like : ``@Component({
                                             selector: 'rcomyaccount-annual-receipt',
                                             templateUrl: './annual-receipt.component.html',

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { interval, of, Observable, timer } from 'rxjs';
-import { combineLatest, map, switchMap, startWith, shareReplay, tap } from 'rxjs/operators';
+import { of, Observable, timer } from 'rxjs';
+import { combineLatest, map, switchMap, shareReplay } from 'rxjs/operators';
 
 const CACHE_SIZE = 1;
 const REFRESH_INTERVAL = 3000;
