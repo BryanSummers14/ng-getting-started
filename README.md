@@ -60,6 +60,16 @@ You may not want Angular material, but I highly recommend the [Component Develop
 I used a crypto coin dashboard, but feel free to use whatever api you want [public apis](https://github.com/toddmotto/public-apis)
 
 ## Project Steps
+Why Angular?
+  - Single page apps provide a much richer user experience than traditional multi page web apps. 
+    - a single page app does not require page reloads to load new content or perform actions. It is all on a single page which feels more like a native application.
+    - Frameworks like angular, react and vue provide structure and modularity to your code. 
+      - Angular is great at scale and for enterprise applications because once developers are working the angular way things are easily added or fixed and things stay organized. 
+      - Each of these frameworks has the idea of components and breaking things down. This is much more maintainable.
+    - Progressive web apps are possible with the help from things like service workers. Take these combined with something like firebase and you can have a web app that runs the same offline as it does online.
+  - You can take a framework such as ionic and reuse your web app code and port it to mobile or desktop. Check this tutorial out on how to port your angular app to MacOs, Windows, or linux and run as a native app. [Electron](https://angularfirebase.com/lessons/desktop-apps-with-electron-and-angular/ )
+  - They are faster! If you use angular features such as lazy loading and the soon to be released Ivy renderer for angular. Your app can load almost instantly and navigating routes will be almost instant.
+  
 
 pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
 
@@ -77,8 +87,11 @@ pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
 Architecture Overview ![alt text](angular-scalable-architecture.png)
 
 1. Setup Project by using the angular cli (``ng new [project-name]``). Add angular routing, choose whatever styling you prefer.
-2. Generate first component using the angular cli (``ng generate component pages/login`` or shorthand `` ng g c pages/login``)
+2. Generate first component using the angular cli
+    - First we need a module for the login page  (``ng generate module pages/login``)
+    - Next we can generate the component (``ng generate component pages/login`` or shorthand `` ng g c pages/login``)
 3. There are several different parts to a component such as, selector, template, styles, Lifecycle hook, logic. Each of these will be covered in more detail.
+
     - Selector, template, styles.
       - In the top of your new component you will see a decorator (@Component) This is a decorator for angular when it is compiling your Typescript. The decorator tells angular what to do with your class. For more info on the types of decorators available within angular, take a look [here](https://toddmotto.com/angular-decorators)
       - The full decorator looks like : ``@Component({
@@ -98,6 +111,14 @@ Architecture Overview ![alt text](angular-scalable-architecture.png)
    - Display the component on a router outlet.
       - With angular being a single page app framework the browser will never leave the page while using the app. However users still need to navigate the app or use a nav. To accomplish swapping the view a router is used in angular. You can learn about the router here: [Angular Router](https://angular.io/guide/router) 
       - The most basic form of a route is essentially something like this `` { path: 'crisis-center', component: CrisisListComponent },`` This says that on the crisis-center path (``myapp.com/crisis-center``) display the CrisisListComponent.  You can see where you would place this route in the previous link to the documentation
+      - lets add a route for our login page
+        - in the login module at the top above the @NgModule decorator add ``const route: Routes = [
+                                                                               { path: '', component: LoginComponent }
+                                                                             ];``
+        - in the top level directory (app) add a app-routing module and in that put ``const routes: Routes = [
+                                                                                        { path: '', pathMatch: 'full', loadChildren: '../app/pages/login/login.module#LoginModule'},
+                                                                                      ];``
+        - these two additions say that the root route will have the login module which displays the login component
 5. Project setup (tsconfig/linter)
     - The example project in this github has some configs setup for you. These are the tslint.json and tsconfig.json these include basic settings for the way typescript compiles your project.
       - You will not need to make changes to ts config a whole lot except for if you wish to namespace file directory paths. This is not necessary but helps with imports so you dont have to type ../../../ to import a ts file. you can see these inside ``"paths": {`` in that tsconfig file.
@@ -108,18 +129,29 @@ Architecture Overview ![alt text](angular-scalable-architecture.png)
     - A service is a way for a developer to make reusable code to fetch data or save data in angular. For example you may have several components that deal with signing a user into your app or logging the user out, or maybe reset password functionality. You would have a log in component, a log out component, and a reset password component. Each of these components could use a service for the previously mentioned logic.
     - in the previous example we could make an authentication service that would handle all of the logic such as signing a user in. Then in any component I could inject the service and use the functionality. A good explanation is found here: [Angular Services](https://angular.io/tutorial/toh-pt4) 
     - you can create your service by using the cli ``ng generate service services/auth``
-    - You can then inject that service into a component by using the constructor.
-        - In your login component you made previously go into the constructor and add the auth service. 
-           - ``constructor(private auth: Auth) { }``
-        - Your service has now been injected and you can use any methods you have in the service (make sure they are public methods).     
+    - You can then inject that service into a component by using the constructor, which will be covered in step 10
 8. Add HttpClient to auth constructor for dependency injection, add HttpClientModule to the imports array for the AppModule
     - Go into your new auth service and inject the HttpClient, similar to how you did with your auth service ``constructor(private httpClient: HttpClient) { }``
       - The http client provides functionality to send requests to an api via REST. Find out more here: [HttpClient](https://angular.io/guide/http)
-    
+    - open the app module.ts file and add the HttpClientModule to the imports array, this allows you to use the httpclient in that module
 9. Create a method to post the login url sending the username and password. (If you are using my auth endpoint the logins are admin: admin@axis, level1: level1@axis, or level2: level2@axis)
+    - this method would be something like  ``public login(): Observable<HttpResponse<any>> {
+                                               return this.httpClient.post('https://training-login-hcexbwcqjc.now.sh/login',{"username":"admin","password":"admin@axis"}, {observe: 'response'});
+                                             } ``
+    - The above method returns an observable of the http response this allows you to subscribe to the observable or use an rxjs operator on it. You can also use toPromise() to turn it into a promise. You can learn about observables [Here](https://angular.io/guide/observables) and rxjs [Here](https://rxjs-dev.firebaseapp.com/guide/overview)
 10. Add the auth service to the constructor of the login component to pull it in via dependency injection
+    - In your login component you made previously go into the constructor and add the auth service. 
+      - ``constructor(private auth: Auth) { }``
+      - Your service has now been injected and you can use any methods you have in the service (make sure they are public methods).   
 11. Time to wire up the login method on our component to the auth service login.
+    - Create a standard method in the login component class called login.
+    - In this method call the auth service and call the login method in the service.
+      - ``this.auth.login().subscribe( response => { console.log(response})``
+    - As a challenge can you figure out how to change the login method to accept arguments from the template rather than be hard coded?
+      - you can read up on [Data binding](https://angular.io/guide/template-syntax) and [Forms](https://angular.io/guide/reactive-forms) 
 12. Once that's hooked up we'll need somewhere to route the user, create another page (call it whatever you want) and wire it up similar to the login page
+    - See steps 2 - 4 on how to create a page / component and add routes.
+    - For this new route, name it something like /home for the path in the app-routing module.
 13. For navigation, I just used angular material schematics [Navigation Schematic](https://material.angular.io/guide/schematics)
 14. The rest you can use the repo as a reference but I really encourage just making things that you want or think might be interesting. This is really just to get a barebones application up to see from a high level how things work and get wired together.
 15. Have fun, feel free to reach out to me via slack with any questions.
