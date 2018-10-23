@@ -87,7 +87,9 @@ pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
 Architecture Overview ![alt text](angular-scalable-architecture.png)
 
 1. Setup Project by using the angular cli (``ng new [project-name]``). Add angular routing, choose whatever styling you prefer.
-2. Generate first component using the angular cli (``ng generate component pages/login`` or shorthand `` ng g c pages/login``) we also need to add a module for the login page  (``ng g m pages/login``)
+2. Generate first component using the angular cli
+    - First we need a module for the login page  (``ng generate module pages/login``)
+    - Next we can generate the component (``ng generate component pages/login`` or shorthand `` ng g c pages/login``)
 3. There are several different parts to a component such as, selector, template, styles, Lifecycle hook, logic. Each of these will be covered in more detail.
 
     - Selector, template, styles.
