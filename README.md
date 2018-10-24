@@ -184,6 +184,7 @@ pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
         - in the login module at the top above the @NgModule decorator add ``const route: Routes = [
                                                                                { path: '', component: LoginComponent }
                                                                              ];``
+        - You will also need to modify the the .forRoot in the login module to be .forChild
         - in the top level directory (app) add a app-routing module and in that put ``const routes: Routes = [
                                                                                         { path: '', pathMatch: 'full', loadChildren: '../app/pages/login/login.module#LoginModule'},
                                                                                       ];``
