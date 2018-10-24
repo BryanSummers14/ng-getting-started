@@ -39,6 +39,8 @@ docker-compose up
 
 ## Resources
 
+Angular heavily leverages both Typescript and RxJS. If you are unfamiliar with either of these projects, these resources can help you get up to speed.
+
 For RxJS: [reactive-how](http://reactive.how/), [learn-rxjs](https://www.learnrxjs.io/)
 
 For Typescript: [Typescript Docs](https://www.typescriptlang.org/docs/home.html)
@@ -59,12 +61,80 @@ You may not want Angular material, but I highly recommend the [Component Develop
 
 I used a crypto coin dashboard, but feel free to use whatever api you want [public apis](https://github.com/toddmotto/public-apis)
 
+## Architecture Overview
+
+![alt text](angular-scalable-architecture.png)
+```
+My presentational components:
+
+Are concerned with how things look.
+
+May contain both presentational and container components** inside, and usually have some DOM markup and styles of their own.
+
+Often allow containment via content projection.
+
+Have no dependencies on the rest of the app, such as actions or stores.
+
+Don’t specify how the data is loaded or mutated.
+
+Receive data as inputs exclusively via props.
+
+Rarely have their own state (when they do, it’s UI state rather than data).
+
+Examples: Sidebar, Story, UserInfo, List.
+
+My container components:
+
+Are concerned with how things work.
+
+May contain both presentational and container components** inside but usually don’t have any DOM markup of their own except for some wrapping divs, and never have any styles.
+
+Provide the data and behavior to presentational or other container components.
+
+Call actions and provide these as Inputs to the presentational components.
+
+Are often stateful, as they tend to serve as data sources.
+
+Examples: UserPage, FollowersSidebar, StoryContainer, FollowedUserList.
+
+I put them in different folders to make this distinction clear.
+
+Benefits of This Approach
+
+Better separation of concerns. You understand your app and your UI better by writing components this way.
+
+Better reusability. You can use the same presentational component with completely different state sources, and turn those into separate container components that can be further reused.
+
+Presentational components are essentially your app’s “palette”. You can put them on a single page and let the designer tweak all their variations without touching the app’s logic. You can run screenshot regression tests on that page.
+
+This forces you to extract “layout components” such as Sidebar, Page, ContextMenu and use content projection instead of duplicating the same markup and layout in several container components.
+
+Remember, components don’t have to emit DOM. They only need to provide composition boundaries between UI concerns.
+
+Take advantage of that.
+- Dan Abramov (edited for Angular)
+```
+
+The architecture of a software system is a description of how to decompose it into pieces, how those pieces interact, and how that decomposition enables and constrains further development - Daniel Figueiredo and Renee Vrantsidis
+
+
+When architecting an Angular application, a few considerations should be kept in mind.
+1. One way data flow
+    - Data should flow from a top down perspective
+      - Passes data via @Input
+    - Actions should flow up
+      - Use @Output event emitters
+    - The component that is 'routed' to is the 'facade' layer that handles pulling in all necessary services and actions, which will then pass necessary data and actions to container components
+2. The Angular cli provides an easy way to get started with a monorepo structure that includes a component library. It is generally considered best practice to put 'presentation' components in the component library.
+3. It is generally considered best practice to declare each component in it's own module which then also exports the component, this allows for the component to be used across the application freely among any other modules.
+4. None of this is intended to get dogmatic about. Use this as a guide of best practices, ultimately the success of your project does not depend on any of these.
+
 ## Project Steps
 Why Angular?
   - Single page apps provide a much richer user experience than traditional multi page web apps. 
     - a single page app does not require page reloads to load new content or perform actions. It is all on a single page which feels more like a native application.
     - Frameworks like angular, react and vue provide structure and modularity to your code. 
-      - Angular is great at scale and for enterprise applications because once developers are working the angular way things are easily added or fixed and things stay organized. 
+      - Angular is great at scale and for enterprise applications because once developers are working the angular way things are easily added or fixed and things stay organized.
       - Each of these frameworks has the idea of components and breaking things down. This is much more maintainable.
     - Progressive web apps are possible with the help from things like service workers. Take these combined with something like firebase and you can have a web app that runs the same offline as it does online.
   - You can take a framework such as ionic and reuse your web app code and port it to mobile or desktop. Check this tutorial out on how to port your angular app to MacOs, Windows, or linux and run as a native app. [Electron](https://angularfirebase.com/lessons/desktop-apps-with-electron-and-angular/ )
@@ -74,7 +144,7 @@ Why Angular?
 pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
 
 1. Node installation
-    - go to  [Node](https://nodejs.org/en/) and install version 8
+    - go to  [Node](https://nodejs.org/en/) and install the latest LTS version.
     - check that node is installed by entering node -v into your terminal if all goes well it should say v8.12.0 (or whatever the current version is)
 
 2. Angular Cli Installation
@@ -84,7 +154,6 @@ pre-reqs: Node v8 or greater. Angular cli installed globally (v7 preferrable)
     
 *side note: angular uses typescript for its language, you can find out more here about what typescript is and how to use it. [TypeScript](https://www.typescriptlang.org/docs/home.html)
  
-Architecture Overview ![alt text](angular-scalable-architecture.png)
 
 1. Setup Project by using the angular cli (``ng new [project-name]``). Add angular routing, choose whatever styling you prefer.
 2. Generate first component using the angular cli
