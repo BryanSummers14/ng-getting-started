@@ -43,7 +43,7 @@
     "bcrypt": "^3.0.2",
     "codelyzer": "~4.3.0",
     "faker": "^4.1.0",
-    "fastify": "^1.12.1",
+    "fastify": "^2.15.1",
     "fastify-cors": "^0.1.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
